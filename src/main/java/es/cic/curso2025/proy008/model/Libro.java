@@ -14,10 +14,10 @@ public class Libro {
     private Long id;
 
     // ATRIBUTOS
-    public String autor;
-    public LocalDate fechaPublicacion;
-    public String nombre;
-    public String descripcion;
+    private String autor;
+    private LocalDate fechaPublicacion;
+    private String nombre;
+    private String descripcion;
 
 
     //Getters y setters
