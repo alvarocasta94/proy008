@@ -22,7 +22,7 @@ public class EscritorServices {
 
     public Escritor get(Long id){
 
-        Optional<Escritor> resultado = escritorRepository.findById(null);
+        Optional<Escritor> resultado = escritorRepository.findById(id);
 
         return resultado.orElse(null);
     }
@@ -31,5 +31,8 @@ public class EscritorServices {
         escritorRepository.deleteById(id);
     }
 
+    public Escritor update(Escritor escritor){
+        return escritorRepository.save(escritor);
+    }
     
 }
