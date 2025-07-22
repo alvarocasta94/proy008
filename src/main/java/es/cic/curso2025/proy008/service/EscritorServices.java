@@ -33,6 +33,9 @@ public class EscritorServices {
     }
 
     public Escritor update(Escritor escritor){
+        if(escritor.getId() == null){
+            throw new EscritorServicesIdNotNullException("No tienes ningun id en la BD");
+        }
         return escritorRepository.save(escritor);
     }
     

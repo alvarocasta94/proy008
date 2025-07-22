@@ -41,6 +41,7 @@ public class EscritorController {
     
     @GetMapping("/{id}")
     public Escritor buscarPorId(@PathVariable Long id){
+  
         return escritorServices.get(id);
     }
 
@@ -51,7 +52,7 @@ public class EscritorController {
 
 
     @PutMapping("/{id}")
-    public Escritor actualizarUna(@PathVariable Long id,@RequestBody Escritor escritor){
+    public Escritor actualizarUna(@PathVariable Long id ,@RequestBody Escritor escritor){
 
         if (escritor.getId() == null || !escritor.getId().equals(id)){
             throw new EscritorIdNotNullException("El id del cuerpo no coincide con el de la URL");
