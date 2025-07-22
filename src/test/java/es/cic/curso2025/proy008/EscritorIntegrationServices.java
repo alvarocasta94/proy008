@@ -136,13 +136,16 @@ public class EscritorIntegrationServices {
 
         Long idObtenido = ObjectMapper.readValue(result.getResponse().getContentAsString(), Escritor.class).getId();
 
+        // Creo otro objeto que va a ser el que obtiene el id del primero para actualizar los cambios
         Escritor escritor2 = new Escritor();
+        escritor2.setId(idObtenido);
         escritor2.setCantidadLibros(27);
         escritor2.setEdad(22);
         escritor2.setNombre("Héctor Solana Díez");
 
         String escritor2Json = ObjectMapper.writeValueAsString(escritor2);
 
+        // Utilizo el jsonPath para verificar los resultados actualizados
         MvcResult result2 = mockMvc.perform(put("/Escritor/" + idObtenido)
                             .contentType("application/json")
                             .content(escritor2Json))
@@ -155,6 +158,7 @@ public class EscritorIntegrationServices {
 
         Escritor escritorActualizado = ObjectMapper.readValue(result2.getResponse().getContentAsString(),Escritor.class);
 
+        // Verificación
         assertEquals(idObtenido, escritorActualizado.getId(),"El id no coincide");
         assertEquals(27, escritorActualizado.getCantidadLibros(),"La cantidad de libros no coincide");
         assertEquals(22, escritorActualizado.getEdad(),"La edad no coincide");

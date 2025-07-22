@@ -1,6 +1,11 @@
 package es.cic.curso2025.proy008.controller;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +24,17 @@ import jakarta.persistence.PostUpdate;
 @RequestMapping("/Escritor")
 public class EscritorController {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(EscritorController.class);
+
     @Autowired
     private EscritorServices escritorServices;
 
     @PostMapping
     public Escritor create(@RequestBody Escritor escritor){
-        
+        if(escritor.getId() != null){
+            
+            throw new EscritorIdNotNullException("No puedes pasarme un id antes de crear un escritor");
+        }
         return escritorServices.create(escritor);
     }
 
@@ -42,7 +52,11 @@ public class EscritorController {
 
     @PutMapping("/{id}")
     public Escritor actualizarUna(@PathVariable Long id,@RequestBody Escritor escritor){
-        // Obtengo la id por la URL y el objeto
+
+        if (escritor.getId() == null || !escritor.getId().equals(id)){
+            throw new EscritorIdNotNullException("El id del cuerpo no coincide con el de la URL");
+        }
+        // Obtengo la id por la URL para que se establezca en el objeto
         escritor.setId(id);
         return escritorServices.update(escritor);
     }

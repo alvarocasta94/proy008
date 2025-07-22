@@ -16,6 +16,7 @@ public class EscritorServices {
     @Autowired
     private EscritorRepository escritorRepository;
 
+    // Métodos
     public Escritor create(Escritor escritor){
         return escritorRepository.save(escritor);
     }
