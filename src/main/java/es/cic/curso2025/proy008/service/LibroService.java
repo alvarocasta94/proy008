@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import es.cic.curso2025.proy008.model.Libro;
 import es.cic.curso2025.proy008.repository.LibroRepository;
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class LibroService {
