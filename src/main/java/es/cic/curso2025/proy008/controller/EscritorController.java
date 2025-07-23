@@ -40,7 +40,7 @@ public class EscritorController {
 
     
     @GetMapping("/{id}")
-    public Escritor buscarPorId(@PathVariable Long id){
+    public Escritor buscarPorId(@PathVariable(required = true) Long id){
   
         return escritorServices.get(id);
     }
