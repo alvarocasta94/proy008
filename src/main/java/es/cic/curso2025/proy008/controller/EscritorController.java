@@ -31,6 +31,10 @@ public class EscritorController {
 
     @PostMapping
     public Escritor create(@RequestBody Escritor escritor){
+
+        LOGGER.info("Solicitud POST recibida para crear escritor:{}", escritor);
+
+
         if(escritor.getId() != null){
             
             throw new EscritorIdNotNullException("No puedes pasarme un id antes de crear un escritor");
@@ -47,19 +51,28 @@ public class EscritorController {
 
     @DeleteMapping("/{id}")
     void borrarUna(@PathVariable Long id){
-         escritorServices.delete(id);
+        LOGGER.info("Solicitud delete recibida para el escritor con ID: {}", id);
+        escritorServices.delete(id);
+        LOGGER.info("Escritor con id  eliminado correctamente", id);
+
     }
 
 
     @PutMapping("/{id}")
     public Escritor actualizarUna(@PathVariable Long id ,@RequestBody Escritor escritor){
 
-        if (escritor.getId() == null || !escritor.getId().equals(id)){
+        LOGGER.info("Solicitud PUT recibida para el escritor con ID: {}", id);
+
+        if (escritor.getId() == null || !escritor.getId().equals(id)) {
+            LOGGER.error("ID del cuerpo ({}) no coincide con el de la URL ({})", escritor.getId(), id);
             throw new EscritorIdNotNullException("El id del cuerpo no coincide con el de la URL");
         }
-        // Obtengo la id por la URL para que se establezca en el objeto
+
         escritor.setId(id);
-        return escritorServices.update(escritor);
+        Escritor actualizado = escritorServices.update(escritor);
+        LOGGER.info("Escritor actualizado correctamente: {}", actualizado);
+        return actualizado;
+
     }
 
 
