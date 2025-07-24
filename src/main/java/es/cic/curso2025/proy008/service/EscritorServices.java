@@ -1,6 +1,7 @@
 
 package es.cic.curso2025.proy008.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class EscritorServices {
         Optional<Escritor> resultado = escritorRepository.findById(id);
 
         return resultado.orElse(null);
+    }
+
+    public List<Escritor> getAll()
+    {
+        return escritorRepository.findAll();
+        
     }
 
     public void  delete(Long id){

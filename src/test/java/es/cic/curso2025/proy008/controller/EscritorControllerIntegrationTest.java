@@ -1,6 +1,7 @@
 package es.cic.curso2025.proy008.controller;
 
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,7 @@ import com.jayway.jsonpath.JsonPath;
 import es.cic.curso2025.proy008.controller.EscritorController;
 
 import es.cic.curso2025.proy008.model.Escritor;
+import es.cic.curso2025.proy008.repository.EscritorRepository;
 
 // Imports MockMvc
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EscritorControllerIntegrationTest {
 
 
+    @Autowired
+    EscritorRepository escritorRepository;
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,6 +40,11 @@ public class EscritorControllerIntegrationTest {
     @Autowired
     private ObjectMapper ObjectMapper;
      
+     @AfterEach
+    void limpiarBaseDeDatos() {
+        escritorRepository.deleteAll();
+    }
+
 
     @Test
     void testCreate() throws Exception{
@@ -55,6 +64,36 @@ public class EscritorControllerIntegrationTest {
                 Escritor escritorCreado = ObjectMapper.readValue(result.getResponse().getContentAsString(), Escritor.class);
                 assertTrue(escritorCreado.getId() > 0, "El id no puede ser cero");
     }
+
+
+    @Test
+    void testListarTodos() throws Exception{
+        Escritor escritor = new Escritor();
+        escritor.setCantidadLibros(70);
+        escritor.setEdad(50);
+        escritor.setNombre("Kafka");
+
+
+        Escritor escritor2 = new Escritor();
+        escritor2.setCantidadLibros(70);
+        escritor2.setEdad(50);
+        escritor2.setNombre("Kafka");
+
+        // Creo los dos objetos
+        escritorRepository.save(escritor);
+        escritorRepository.save(escritor2);
+
+         mockMvc.perform(get("/Escritor"))
+                .andExpect(status().isOk())
+                .andExpect(result -> {
+                        String json = result.getResponse().getContentAsString();
+                        Escritor escritores[] = ObjectMapper.readValue(json,Escritor[].class );
+                        assertEquals(2, escritores.length);
+
+                });
+
+    }
+
 
 
     @Test

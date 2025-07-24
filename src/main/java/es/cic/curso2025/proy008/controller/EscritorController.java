@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +49,13 @@ public class EscritorController {
     public Escritor buscarPorId(@PathVariable(required = true) Long id){
   
         return escritorServices.get(id);
+    }
+
+    @GetMapping("")
+    public List<Escritor> ListarTodos(){
+
+        List<Escritor> escritores = escritorServices.getAll();
+        return escritores;
     }
 
     @DeleteMapping("/{id}")

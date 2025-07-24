@@ -73,6 +73,26 @@ public class EscritorServiceIntegrationTest {
         assertEquals("Lucas", escritor_Obtenido.getNombre());
     }
 
+    @Test
+    void testGetAll(){
+        Escritor escritor = new Escritor();
+        escritor.setCantidadLibros(70);
+        escritor.setEdad(50);
+        escritor.setNombre("Kafka");
+
+
+        Escritor escritor2 = new Escritor();
+        escritor2.setCantidadLibros(70);
+        escritor2.setEdad(50);
+        escritor2.setNombre("Kafka");
+
+        escritorServices.create(escritor);
+        escritorServices.create(escritor2);
+
+        List<Escritor> escritores  = escritorServices.getAll();
+        assertEquals(2, escritores.size());
+
+    }
 
     
     @Test
