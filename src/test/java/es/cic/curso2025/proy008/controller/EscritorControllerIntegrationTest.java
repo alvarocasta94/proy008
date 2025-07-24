@@ -1,4 +1,5 @@
-package es.cic.curso2025.proy008;
+package es.cic.curso2025.proy008.controller;
+
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EscritorIntegrationServices {
+public class EscritorControllerIntegrationTest {
 
 
 
