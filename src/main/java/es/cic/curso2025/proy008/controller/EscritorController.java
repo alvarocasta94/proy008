@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import es.cic.curso2025.proy008.model.Escritor;
 import es.cic.curso2025.proy008.repository.EscritorRepository;
-import es.cic.curso2025.proy008.service.EscritorServices;
+import es.cic.curso2025.proy008.service.EscritorService;
 import jakarta.persistence.PostUpdate;
 
 @RestController
@@ -29,7 +29,7 @@ public class EscritorController {
     private final static Logger LOGGER = LoggerFactory.getLogger(EscritorController.class);
 
     @Autowired
-    private EscritorServices escritorServices;
+    private EscritorService EscritorService;
 
     @PostMapping
     public Escritor create(@RequestBody Escritor escritor){
@@ -41,27 +41,27 @@ public class EscritorController {
             
             throw new EscritorIdNotNullException("No puedes pasarme un id antes de crear un escritor");
         }
-        return escritorServices.create(escritor);
+        return EscritorService.create(escritor);
     }
 
     
     @GetMapping("/{id}")
     public Escritor buscarPorId(@PathVariable(required = true) Long id){
   
-        return escritorServices.get(id);
+        return EscritorService.get(id);
     }
 
     @GetMapping("")
     public List<Escritor> ListarTodos(){
 
-        List<Escritor> escritores = escritorServices.getAll();
+        List<Escritor> escritores = EscritorService.getAll();
         return escritores;
     }
 
     @DeleteMapping("/{id}")
     void borrarUna(@PathVariable Long id){
         LOGGER.info("Solicitud delete recibida para el escritor con ID: {}", id);
-        escritorServices.delete(id);
+        EscritorService.delete(id);
         LOGGER.info("Escritor con id  eliminado correctamente", id);
 
     }
@@ -78,7 +78,7 @@ public class EscritorController {
         }
 
         escritor.setId(id);
-        Escritor actualizado = escritorServices.update(escritor);
+        Escritor actualizado = EscritorService.update(escritor);
         LOGGER.info("Escritor actualizado correctamente: {}", actualizado);
         return actualizado;
 

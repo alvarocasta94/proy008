@@ -11,7 +11,7 @@ import es.cic.curso2025.proy008.model.Escritor;
 import es.cic.curso2025.proy008.repository.EscritorRepository;
 
 @Service
-public class EscritorServices {
+public class EscritorService {
 
 
     @Autowired
@@ -41,7 +41,7 @@ public class EscritorServices {
 
     public Escritor update(Escritor escritor){
         if(escritor.getId() == null){
-            throw new EscritorServicesIdNotNullException("No tienes ningun id en la BD");
+            throw new EscritorServiceIdNotNullException("No tienes ningun id en la BD");
         }
         return escritorRepository.save(escritor);
     }

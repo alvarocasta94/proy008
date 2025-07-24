@@ -20,6 +20,19 @@ public class Escritor {
 
     private long cantidadLibros;
 
+
+    public Escritor(){
+
+    }
+
+    public Escritor(Long id, String nombre, int edad, long cantidadLibros){
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.cantidadLibros = cantidadLibros;
+    }
+    
+
     public Long getId() {
         return id;
     }

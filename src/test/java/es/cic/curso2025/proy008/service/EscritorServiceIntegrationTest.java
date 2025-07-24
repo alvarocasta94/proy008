@@ -26,7 +26,7 @@ import es.cic.curso2025.proy008.repository.EscritorRepository;
 public class EscritorServiceIntegrationTest {
 
     @Autowired
-    EscritorServices escritorServices;
+    EscritorService escritorService;
 
     @Autowired
     EscritorRepository escritorRepository;
@@ -43,7 +43,7 @@ public class EscritorServiceIntegrationTest {
         escritor.setCantidadLibros(2);
         escritor.setEdad(20);
         escritor.setNombre("Lucas");
-        Escritor escritorGuardado = escritorServices.create(escritor);
+        Escritor escritorGuardado = escritorService.create(escritor);
 
         assertNotNull(escritorGuardado.getId(), "El ID no debe ser null tras guardar");
         assertEquals(2, escritorGuardado.getCantidadLibros());
@@ -63,9 +63,9 @@ public class EscritorServiceIntegrationTest {
         escritor.setEdad(20);
         escritor.setNombre("Lucas");
 
-        Escritor escritorGuardado = escritorServices.create(escritor);
+        Escritor escritorGuardado = escritorService.create(escritor);
 
-        Escritor escritor_Obtenido = escritorServices.get(escritorGuardado.getId());
+        Escritor escritor_Obtenido = escritorService.get(escritorGuardado.getId());
 
         assertNotNull(escritor_Obtenido.getId(), "El ID no debe ser null tras guardar");
         assertEquals(2, escritor_Obtenido.getCantidadLibros());
@@ -86,10 +86,10 @@ public class EscritorServiceIntegrationTest {
         escritor2.setEdad(50);
         escritor2.setNombre("Kafka");
 
-        escritorServices.create(escritor);
-        escritorServices.create(escritor2);
+        escritorService.create(escritor);
+        escritorService.create(escritor2);
 
-        List<Escritor> escritores  = escritorServices.getAll();
+        List<Escritor> escritores  = escritorService.getAll();
         assertEquals(2, escritores.size());
 
     }
@@ -103,7 +103,7 @@ public class EscritorServiceIntegrationTest {
         escritor.setEdad(20);
         escritor.setNombre("Lucas");
 
-        Escritor escritorGuardado = escritorServices.create(escritor);
+        Escritor escritorGuardado = escritorService.create(escritor);
 
         Long idObtenido = escritorGuardado.getId();
         
@@ -114,7 +114,7 @@ public class EscritorServiceIntegrationTest {
         escritorNuevo.setNombre("Alguien");
         
         
-        Escritor escritorActualizado = escritorServices.update(escritorNuevo);
+        Escritor escritorActualizado = escritorService.update(escritorNuevo);
 
         assertNotNull(escritorActualizado.getId(), "El ID no debe ser null tras guardar");
         assertEquals(1, escritorActualizado.getCantidadLibros());
@@ -132,11 +132,11 @@ public class EscritorServiceIntegrationTest {
         escritor.setEdad(20);
         escritor.setNombre("Lucas");
 
-        Escritor escritorGuardado = escritorServices.create(escritor);
+        Escritor escritorGuardado = escritorService.create(escritor);
 
-        escritorServices.delete(escritorGuardado.getId());
+        escritorService.delete(escritorGuardado.getId());
         
-        Escritor escritor_eliminado = escritorServices.get(escritorGuardado.getId());
+        Escritor escritor_eliminado = escritorService.get(escritorGuardado.getId());
 
         assertNull(escritor_eliminado);
     }
