@@ -18,8 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import es.cic.curso2025.proy008.model.Escritor;
+import es.cic.curso2025.proy008.model.Premio;
 import es.cic.curso2025.proy008.repository.EscritorRepository;
 import es.cic.curso2025.proy008.service.EscritorService;
+import es.cic.curso2025.proy008.service.PremioService;
 import jakarta.persistence.PostUpdate;
 
 @RestController
@@ -29,7 +31,11 @@ public class EscritorController {
     private final static Logger LOGGER = LoggerFactory.getLogger(EscritorController.class);
 
     @Autowired
-    private EscritorService EscritorService;
+    private EscritorService escritorService;
+
+    
+    @Autowired
+    private PremioService premioService;
 
     @PostMapping
     public Escritor create(@RequestBody Escritor escritor){
@@ -41,27 +47,36 @@ public class EscritorController {
             
             throw new EscritorIdNotNullException("No puedes pasarme un id antes de crear un escritor");
         }
-        return EscritorService.create(escritor);
+        return escritorService.create(escritor);
+    }
+
+
+    
+    @PostMapping("/premio")
+    public Premio create(@RequestBody Premio premio){
+        Premio premioCreado = premioService.create(premio);
+
+        return premioCreado;
     }
 
     
     @GetMapping("/{id}")
     public Escritor buscarPorId(@PathVariable(required = true) Long id){
   
-        return EscritorService.get(id);
+        return escritorService.get(id);
     }
 
     @GetMapping("")
     public List<Escritor> ListarTodos(){
 
-        List<Escritor> escritores = EscritorService.getAll();
+        List<Escritor> escritores = escritorService.getAll();
         return escritores;
     }
 
     @DeleteMapping("/{id}")
     void borrarUna(@PathVariable Long id){
         LOGGER.info("Solicitud delete recibida para el escritor con ID: {}", id);
-        EscritorService.delete(id);
+        escritorService.delete(id);
         LOGGER.info("Escritor con id  eliminado correctamente", id);
 
     }
@@ -78,7 +93,7 @@ public class EscritorController {
         }
 
         escritor.setId(id);
-        Escritor actualizado = EscritorService.update(escritor);
+        Escritor actualizado = escritorService.update(escritor);
         LOGGER.info("Escritor actualizado correctamente: {}", actualizado);
         return actualizado;
 
