@@ -38,7 +38,7 @@ public class LibroController {
 
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<Libro> getAll() {
 
         LOGGER.info("Enpoint GET /libro obtener todos los libros");

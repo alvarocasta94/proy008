@@ -2,10 +2,13 @@ package es.cic.curso2025.proy008.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Libro {
@@ -19,6 +22,8 @@ public class Libro {
     private String nombre;
     private String descripcion;
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    private Editorial editorial;
 
     //Getters y setters
     public void setId(Long id) {
@@ -63,6 +68,15 @@ public class Libro {
         this.descripcion = descripcion;
     }
 
+     public Editorial getEditorial() {
+        return editorial;
+    }
+
+
+    public void setEditorial(Editorial editorial) {
+        this.editorial = editorial;
+    }
+
 
     @Override
     public String toString() {
@@ -92,4 +106,7 @@ public class Libro {
             return false;
         return true;
     }
+
+
+   
 }
