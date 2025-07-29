@@ -90,7 +90,7 @@ public class SeCreaLibroDesdeEditorialIntegrationTest {
 
         String libroJson = objectMapper.writeValueAsString(libroCreado);
 
-        mockMvc.perform(put("/libro")
+        mockMvc.perform(put("/libro/" + libroCreado.getId())
                 .contentType("application/json")
                 .content(libroJson))
                 .andDo(print())                

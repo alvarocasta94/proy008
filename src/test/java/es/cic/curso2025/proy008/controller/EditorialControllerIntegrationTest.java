@@ -73,6 +73,7 @@ public class EditorialControllerIntegrationTest {
     void testCreateIntentandoModificacion() throws Exception {
 
         Editorial editorial = new Editorial();
+        editorial.setId(1L);
         editorial.setNombre("VOX");
         editorial.setAnio_fundacion(1982);
         editorial.setDireccion("Calle Charca Charquez, 3");;
