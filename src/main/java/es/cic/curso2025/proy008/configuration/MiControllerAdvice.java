@@ -24,5 +24,11 @@ public class MiControllerAdvice {
         return ex.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PremioIdNotNullException.class)
+    public String manejarPremioIdNotNull(PremioIdNotNullException ex) {
+        return ex.getMessage();
+    }
+
 
 }
