@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import es.cic.curso2025.proy008.controller.EscritorIdNotNullException;
 import es.cic.curso2025.proy008.controller.ModificacionSecurityException;
+import es.cic.curso2025.proy008.controller.PremioIdNotNullException;
 
 @RestControllerAdvice
 public class MiControllerAdvice {
@@ -22,4 +23,6 @@ public class MiControllerAdvice {
     public String manejarEscritorIdNotNull(EscritorIdNotNullException ex) {
         return ex.getMessage();
     }
+
+
 }

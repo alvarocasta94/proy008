@@ -39,8 +39,15 @@ public class Premio {
     }
 
     public Premio(Long id, int anio, String nombrePremio, String libroPremiado, String categoria){
-        
         this.id = id;
+        this.anio  = anio;
+        this.nombrePremio = nombrePremio;
+        this.libroPremiado = libroPremiado;
+        this.categoria = categoria;
+    }
+
+    public Premio( int anio, String nombrePremio, String libroPremiado, String categoria){
+        
         this.anio  = anio;
         this.nombrePremio = nombrePremio;
         this.libroPremiado = libroPremiado;
