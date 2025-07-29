@@ -28,9 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import es.cic.curso2025.proy008.model.Escritor;
 import es.cic.curso2025.proy008.model.Premio;
-import es.cic.curso2025.proy008.repository.EscritorRepository;
 import es.cic.curso2025.proy008.repository.PremioRepository;
 
 @AutoConfigureMockMvc
@@ -56,7 +54,7 @@ public class PremioControllerIntegrationTest {
 
     @Test
     void testCreatePremio() throws Exception {
-        Premio premio = new Premio(null, 2025, "Premio Planeta", "El infinito en un junco", "Narrativa");
+        Premio premio = new Premio(2025, "Premio Planeta", "El infinito en un junco", "Narrativa");
 
         String premioJson = objectMapper.writeValueAsString(premio);
 
@@ -74,8 +72,8 @@ public class PremioControllerIntegrationTest {
 
    @Test
     void testListarTodosPremios() throws Exception {
-        Premio premio1 = new Premio(null, 2020, "Premio Nadal", "Reina Roja", "Suspense");
-        Premio premio2 = new Premio(null, 2021, "Premio Alfaguara", "La hija del relojero", "Histórica");
+        Premio premio1 = new Premio( 2020, "Premio Nadal", "Reina Roja", "Suspense");
+        Premio premio2 = new Premio( 2021, "Premio Alfaguara", "La hija del relojero", "Histórica");
 
         premioRepository.save(premio1);
         premioRepository.save(premio2);
@@ -94,7 +92,7 @@ public class PremioControllerIntegrationTest {
 
      @Test
     void testBuscarPremioPorId() throws Exception {
-        Premio premio = new Premio(null, 2024, "Premio Cervantes", "Don Quijote", "Literatura Clásica");
+        Premio premio = new Premio( 2024, "Premio Cervantes", "Don Quijote", "Literatura Clásica");
 
         String premioJson = objectMapper.writeValueAsString(premio);
 
@@ -117,7 +115,7 @@ public class PremioControllerIntegrationTest {
 
     @Test
     void testEliminarPremio() throws Exception {
-        Premio premio = new Premio(null, 2025, "Premio Biblioteca Breve", "Los Asquerosos", "Contemporáneo");
+        Premio premio = new Premio(2025, "Premio Biblioteca Breve", "Los Asquerosos", "Contemporáneo");
 
         String premioJson = objectMapper.writeValueAsString(premio);
 
