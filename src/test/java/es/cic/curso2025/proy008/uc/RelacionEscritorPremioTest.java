@@ -59,7 +59,7 @@ public class RelacionEscritorPremioTest {
         String escritorjson = objectMapper.writeValueAsString(escritorTest);
 
 
-        MvcResult result = mockMvc.perform(post("/Escritor")
+        MvcResult result = mockMvc.perform(post("/Escritor/conPremio")
                             .contentType("application/json")
                              .content(escritorjson))                           
                             .andExpect(status().isOk())
@@ -110,3 +110,4 @@ public class RelacionEscritorPremioTest {
 
 
 }
+
