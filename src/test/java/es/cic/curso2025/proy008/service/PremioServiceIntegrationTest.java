@@ -107,7 +107,7 @@ public class PremioServiceIntegrationTest {
 
     @Test
     void testDeletePremio() {
-        Premio premio = new Premio(null, 2025, "Premio Biblioteca Breve", "Los Asquerosos", "Contemporáneo");
+        Premio premio = new Premio(2025, "Premio Biblioteca Breve", "Los Asquerosos", "Contemporáneo");
         Premio premioGuardado = premioService.create(premio);
 
         premioService.delete(premioGuardado.getId());
