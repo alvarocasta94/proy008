@@ -51,7 +51,7 @@ public class EscritorController {
     }
 
 
-        @PostMapping("/conPremio")
+    @PostMapping("/conPremio")
     public Escritor crearEscritorConPremio(@RequestBody Escritor escritor) {
         if (escritor.getId() != null) {
             throw new EscritorIdNotNullException("El escritor no debe tener ID al crearse");
@@ -59,7 +59,7 @@ public class EscritorController {
 
         Premio premio = escritor.getPremio();
         if (premio != null && premio.getId() != null) {
-            throw new RuntimeException("El premio no debe tener ID al crearse");
+            throw new PremioIdNotNullException("El premio no debe tener ID al crearse");
         }
 
         Premio premioCreado = premioService.create(premio);
