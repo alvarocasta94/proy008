@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import es.cic.curso2025.proy008.model.Libro;
+import es.cic.curso2025.proy008.model.Editorial;
 import es.cic.curso2025.proy008.repository.EditorialRepository;
 import es.cic.curso2025.proy008.repository.LibroRepository;
 
@@ -35,101 +35,94 @@ public class EditorialServiceIntegrationTest {
     @Test
     void testCreate() {
 
-        Libro libro = new Libro();
-        libro.setNombre("El Principito");
-        libro.setAutor("Antoine de Saint-Exupéry");
-        libro.setDescripcion("Un cuento filosófico para niños y adultos");
-        libro.setFechaPublicacion(LocalDate.parse("2024-07-22"));
+        Editorial editorial = new Editorial();
+        editorial.setNombre("Espasa");
+        editorial.setAnio_fundacion(1978);
+        editorial.setDireccion("Calle Charo Charez, 2");
 
-        Libro libroGuardado = libroService.create(libro);
+        Editorial editorialGuardada = editorialService.create(editorial);
 
-        assertNotNull(libroGuardado.getId(), "El ID no debe ser null tras guardar");
-        assertEquals("El Principito", libroGuardado.getNombre());
-        assertEquals("Antoine de Saint-Exupéry", libroGuardado.getAutor());
-        assertEquals("Un cuento filosófico para niños y adultos", libroGuardado.getDescripcion());
-        assertEquals(LocalDate.parse("2024-07-22"), libroGuardado.getFechaPublicacion());
+        assertNotNull(editorialGuardada.getId(), "El ID no debe ser null tras guardar");
+        assertEquals("Espasa", editorialGuardada.getNombre());
+        assertEquals(1978, editorialGuardada.getAnio_fundacion());
+        assertEquals("Calle Charo Charez, 2", editorialGuardada.getDireccion());
 
-        Optional<Libro> desdeBD = libroRepository.findById(libroGuardado.getId());
-        assertTrue(desdeBD.isPresent(), "El libro debe existir en la BBDD");
+        Optional<Editorial> desdeBD = editorialRepository.findById(editorialGuardada.getId());
+        assertTrue(desdeBD.isPresent(), "La editorial debe existir en la BBDD");
     }
 
     @Test
     void testGet() {
 
-        Libro libro = new Libro();
-        libro.setNombre("Don Quijote de la Mancha");
-        libro.setAutor("Miguel de Cervantes");
-        libro.setDescripcion("Las aventuras del ingenioso hidalgo");
-        libro.setFechaPublicacion(LocalDate.parse("2024-07-22"));
+        Editorial editorial = new Editorial();
+        editorial.setNombre("VOX");
+        editorial.setAnio_fundacion(1964);
+        editorial.setDireccion("Calle Charca Charquez, 3");
 
-        Libro libroGuardado = libroService.create(libro);
+        Editorial editorialGuardada = editorialService.create(editorial);
 
-        Optional<Libro> libro_Obtenido = libroService.get(libroGuardado.getId());
+        Optional<Editorial> editorial_Obtenida = editorialService.get(editorialGuardada.getId());
 
-        assertTrue(libro_Obtenido.isPresent(), "El libro debería estar presente");
-        assertEquals("Don Quijote de la Mancha", libro_Obtenido.get().getNombre());
-        assertEquals("Miguel de Cervantes", libro_Obtenido.get().getAutor());
-        assertEquals("Las aventuras del ingenioso hidalgo", libro_Obtenido.get().getDescripcion());
-        assertEquals(LocalDate.parse("2024-07-22"), libroGuardado.getFechaPublicacion());
+        assertTrue(editorial_Obtenida.isPresent(), "La editorial debería estar presente");
+        assertEquals("VOX", editorial_Obtenida.get().getNombre());
+        assertEquals(1964, editorial_Obtenida.get().getAnio_fundacion());
+        assertEquals("Calle Charca Charquez, 3", editorial_Obtenida.get().getDireccion());
     }
 
     @Test
     void testGetAll() {
-        Libro libro1 = new Libro();
-        libro1.setNombre("El Quijote");
-        Libro libro2 = new Libro();
-        libro2.setNombre("El Lazarillo de Tormes");
+        Editorial editorial1 = new Editorial();
+        editorial1.setNombre("Espasa");
+        Editorial editorial2 = new Editorial();
+        editorial2.setNombre("VOX");
 
-        libroService.create(libro1);
-        libroService.create(libro2);
+        editorialService.create(editorial1);
+        editorialService.create(editorial2);
 
-        List<Libro> lista = libroService.getAll();
+        List<Editorial> lista = editorialService.get();
 
         assertEquals(2, lista.size());
     }
 
     @Test
     void testUpdate() {
-        Libro libro = new Libro();
-        libro.setNombre("fahrenheit 451");
-        libro.setAutor("Ray Bradbury");
-        libro.setDescripcion("Movidas varias");
-        libro.setFechaPublicacion(LocalDate.parse("2024-07-22"));
-        Libro libroGuardado = libroService.create(libro);
+        Editorial editorial = new Editorial();
+        editorial.setNombre("Salamandra");
+        editorial.setAnio_fundacion(1994);
+        editorial.setDireccion("Calle Gloria Fuertes, 8");
+        Editorial editorialGuardada = editorialService.create(editorial);
 
-        Libro libroActualizado = new Libro();
-        libroActualizado.setNombre("La Santa Biblia");
-        libroActualizado.setAutor("Dios");
-        libroActualizado.setDescripcion("Más movidas");
-        libroActualizado.setFechaPublicacion(LocalDate.parse("2025-07-22"));
+        Editorial editorialActualizada = new Editorial();
+        editorialActualizada.setNombre("Círculo de Lectores");
+        editorialActualizada.setAnio_fundacion(1982);
+        editorialActualizada.setDireccion("Calle Pepe Pepez, 11");
 
-        Libro resultado = libroService.update(libroGuardado.getId(), libroActualizado);
+        Editorial resultado = editorialService.update(editorialGuardada.getId(), editorialActualizada);
 
-        assertEquals("La Santa Biblia", resultado.getNombre());
-        assertEquals("Dios", resultado.getAutor());
-        assertEquals("Más movidas", resultado.getDescripcion());
-        assertEquals(LocalDate.parse("2025-07-22"), resultado.getFechaPublicacion());
+        assertEquals("Círculo de Lectores", resultado.getNombre());
+        assertEquals(1982, resultado.getAnio_fundacion());
+        assertEquals("Calle Pepe Pepez, 11", resultado.getDireccion());
     }
 
     @Test
     void testUpdateNoExiste() {
-        Libro libroActualizado = new Libro();
-        libroActualizado.setNombre("No existe");
+        Editorial editorialActualizada = new Editorial();
+        editorialActualizada.setNombre("No existe");
 
         assertThrows(EntidadNoEncontradaException.class, () -> {
-            libroService.update(999L, libroActualizado);
+            editorialService.update(999L, editorialActualizada);
         });
     }
 
     @Test
     void testDelete() {
-        Libro libro = new Libro();
-        libro.setNombre("Harry Potter y la piedra filosofal");
-        Libro libroGuardado = libroService.create(libro);
+        Editorial editorial = new Editorial();
+        editorial.setNombre("Anaya");
+        Editorial editorialGuardada = editorialService.create(editorial);
 
-        libroService.delete(libroGuardado.getId());
+        editorialService.delete(editorialGuardada.getId());
 
-        Optional<Libro> eliminado = libroService.get(libroGuardado.getId());
+        Optional<Editorial> eliminado = editorialService.get(editorialGuardada.getId());
 
         assertFalse(eliminado.isPresent());
     }
@@ -137,7 +130,7 @@ public class EditorialServiceIntegrationTest {
     @Test
     void testDeleteNoExiste() {
         assertThrows(EntidadNoEncontradaException.class, () -> {
-            libroService.delete(999L);
+            editorialService.delete(999L);
         });
     }
 
